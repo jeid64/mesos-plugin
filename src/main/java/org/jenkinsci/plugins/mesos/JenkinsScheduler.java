@@ -66,6 +66,8 @@ import org.apache.mesos.Protos.ExecutorID;
 import org.apache.mesos.Protos.Filters;
 import org.apache.mesos.Protos.FrameworkID;
 import org.apache.mesos.Protos.FrameworkInfo;
+import static org.apache.mesos.Protos.FrameworkInfo.Capability;
+import static org.apache.mesos.Protos.FrameworkInfo.Capability.Type.GPU_RESOURCES;
 import org.apache.mesos.Protos.MasterInfo;
 import org.apache.mesos.Protos.Offer;
 import org.apache.mesos.Protos.OfferID;
@@ -153,6 +155,7 @@ public class JenkinsScheduler implements Scheduler {
             .setPrincipal(principal)
             .setCheckpoint(mesosCloud.isCheckpoint())
             .setWebuiUrl(webUrl != null ? webUrl : "")
+            .addCapabilities(Capability.newBuilder().setType(GPU_RESOURCES))
             .build();
 
     LOGGER.info("Initializing the Mesos driver with options"
